@@ -2,6 +2,8 @@
 
 Proiect educațional pentru cursul **Programare Avansată pe Obiecte în Java**.
 
+Programare Avansată pe Obiecte în Java — materiale și resurse pentru cursul din 2026.
+
 ---
 
 
@@ -11,8 +13,7 @@ Proiect educațional pentru cursul **Programare Avansată pe Obiecte în Java**.
 |-----------|---------|
 | [laboratory00](src/com/pao/laboratory00/Readme.md) | Primul program, array-uri, Scanner |
 | [laboratory01](src/com/pao/laboratory01/Readme.md) | Clase, încapsulare, Singleton, Comparator |
-=======
-Programare Avansată pe Obiecte în Java — materiale și resurse pentru cursul din 2026.
+
 
 ---
 
