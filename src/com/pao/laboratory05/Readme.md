@@ -27,6 +27,7 @@
 
 | Fișier | Rol |
 |--------|-----|
+| [playlist/Readme.md](playlist/Readme.md) | Java Records quick reference — citește înainte de Exercise 1 |
 | [playlist/Main.java](playlist/Main.java) | Exercise 1 — punct de intrare, creezi restul |
 | [biblioteca/Main.java](biblioteca/Main.java) | Exercise 2 — punct de intrare, creezi restul |
 | [angajati/Main.java](angajati/Main.java) | Exercise 3 — punct de intrare, creezi restul |
@@ -47,7 +48,7 @@
 
 ## Exercise 1 — Playlist
 
-📄 **Pachet:** [playlist/](playlist/)
+📄 **Pachet:** [playlist/](playlist/) · 📖 **Pre-citire:** [playlist/Readme.md](playlist/Readme.md) — Java Records quick reference (Levels 1–4)
 
 ### Ce creezi (toate fișierele în `com.pao.laboratory05.playlist`)
 
