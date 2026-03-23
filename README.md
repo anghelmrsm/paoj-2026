@@ -123,9 +123,9 @@ git remote -v
 > Vei folosi `lab5` în loc de `labX` pentru laboratory04, `lab6` pentru laboratory05 etc.
 
 ```bash
-git fetch upstream labX   # înlocuiește X cu numărul lab (ex: lab04)
-git checkout -b labX --track upstream/labX
-git push -u origin labX
+git fetch upstream lab5   # înlocuiește X cu numărul lab (ex: lab04)
+git checkout -b lab5 --track upstream/lab5
+git push -u origin lab5 
 ```
 
 > Comenzile de sus fac următoarele:
