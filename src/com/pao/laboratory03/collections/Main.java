@@ -1,5 +1,7 @@
 package com.pao.laboratory03.collections;
 
+import java.util.*;
+
 /**
  * Exercițiul 1 — Colecții: HashMap și TreeMap
  *
@@ -50,7 +52,48 @@ package com.pao.laboratory03.collections;
  */
 public class Main {
     public static void main(String[] args) {
-        // TODO: implementează cele 3 părți de mai sus
+
+        System.out.println("=== PARTEA A: HashMap — frecvența cuvintelor ===");
+
+        String[] words = {"java", "python", "java", "c++", "python", "java", "rust", "c++", "go"};
+
+        HashMap<String, Integer> frecventa = new HashMap<>();
+        for (String word : words) {
+            frecventa.put(word, frecventa.getOrDefault(word, 0) + 1);
+        }
+
+        System.out.println("Frecventa: " + frecventa);
+
+        System.out.println("Contine 'rust'? " + frecventa.containsKey("rust"));
+
+        System.out.println("Chei: " + frecventa.keySet());
+        System.out.println("Valori: " + frecventa.values());
+
+        for (Map.Entry<String, Integer> entry : frecventa.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
+
+
+        System.out.println("\n=== PARTEA B: TreeMap — sortare automată ===");
+
+        TreeMap<String, Integer> frecventaSortata = new TreeMap<>(frecventa);
+
+        System.out.println("Sortat: " + frecventaSortata);
+
+        System.out.println("Prima cheie: " + frecventaSortata.firstKey());
+        System.out.println("Ultima cheie: " + frecventaSortata.lastKey());
+
+
+        System.out.println("\n=== PARTEA C: Map cu obiecte ===");
+
+        HashMap<String, List<String>> materiiStudenti = new HashMap<>();
+        materiiStudenti.put("PAOJ", new ArrayList<>(Arrays.asList("Ana", "Mihai", "Ion")));
+        materiiStudenti.put("BD", new ArrayList<>(Arrays.asList("Ana", "Elena")));
+
+        System.out.println("Studenți la PAOJ: " + materiiStudenti.get("PAOJ"));
+
+        materiiStudenti.get("BD").add("George");
+        System.out.println("Studenți la BD (actualizat): " + materiiStudenti.get("BD"));
     }
 }
 

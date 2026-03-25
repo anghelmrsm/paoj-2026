@@ -1,6 +1,9 @@
 package com.pao.laboratory03.exercise;
 
-import java.util.Scanner;
+import com.pao.laboratory03.exercise.model.Subject;
+import com.pao.laboratory03.exercise.service.StudentService;
+
+import java.util.*;
 
 /**
  * Exercițiul 4 (Integrator) — Sistem de gestiune studenți + note
@@ -69,9 +72,16 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // TODO: obține instanța StudentService (Singleton)
+        StudentService service = StudentService.getInstance();
 
         System.out.println("=== Sistem Gestiune Studenți ===");
+
+        StringBuilder subjectsStr = new StringBuilder();
+        Subject[] subjects = Subject.values();
+        for (int i = 0; i < subjects.length; i++) {
+            subjectsStr.append(subjects[i].name());
+            if (i < subjects.length - 1) subjectsStr.append(", ");
+        }
 
         boolean running = true;
         while (running) {
@@ -93,32 +103,43 @@ public class Main {
                         String name = scanner.nextLine().trim();
                         System.out.print("Vârsta: ");
                         int age = Integer.parseInt(scanner.nextLine().trim());
-                        // TODO: apelează service.addStudent(name, age)
+
+                        service.addStudent(name, age);
                         System.out.println("Student adăugat cu succes!");
                         break;
 
                     case "2":
                         System.out.print("Nume student: ");
                         String studentName = scanner.nextLine().trim();
-                        System.out.print("Materie (" + /* TODO: afișează Subject.values() */ "PAOJ, BD, SO, RC" + "): ");
-                        String subjectStr = scanner.nextLine().trim().toUpperCase();
+                        System.out.print("Materie (" + subjectsStr.toString() + "): ");
+                        String subjectInput = scanner.nextLine().trim().toUpperCase();
                         System.out.print("Nota (1-10): ");
                         double grade = Double.parseDouble(scanner.nextLine().trim());
-                        // TODO: convertește subjectStr în Subject cu valueOf()
-                        // TODO: apelează service.addGrade(studentName, subject, grade)
+
+                        Subject subject = Subject.valueOf(subjectInput);
+
+                        service.addGrade(studentName, subject, grade);
                         System.out.println("Notă adăugată!");
                         break;
 
                     case "3":
-                        // TODO: apelează service.printAllStudents()
+                        service.printAllStudents();
                         break;
 
                     case "4":
-                        // TODO: apelează service.printTopStudents()
+                        service.printTopStudents();
                         break;
 
                     case "5":
-                        // TODO: apelează service.getAveragePerSubject() și afișează
+                        System.out.println("=== Media pe materie ===");
+                        Map<Subject, Double> averages = service.getAveragePerSubject();
+                        if (averages.isEmpty()) {
+                            System.out.println("Nu există note adăugate.");
+                        } else {
+                            averages.forEach((subj, avg) ->
+                                    System.out.printf("%s: %.2f%n", subj.name(), avg)
+                            );
+                        }
                         break;
 
                     case "0":
@@ -130,9 +151,9 @@ public class Main {
                         System.out.println("Opțiune invalidă.");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Eroare: Introdu un număr valid.");
+                System.out.println("Eroare: Introdu un număr valid pentru vârstă/notă.");
             } catch (IllegalArgumentException e) {
-                System.out.println("Eroare: " + e.getMessage());
+                System.out.println("Eroare: Materia introdusă nu există. Variante valide: " + subjectsStr.toString());
             } catch (RuntimeException e) {
                 System.out.println("Eroare: " + e.getMessage());
             }
