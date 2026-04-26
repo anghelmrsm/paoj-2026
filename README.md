@@ -13,15 +13,73 @@ Materiale și resurse pentru cursul **Programare Avansată pe Obiecte în Java**
 | [laboratory03](src/com/pao/laboratory03/Readme.md) | Moștenire, clase abstracte, interfețe, equals/hashCode, colecții |
 | [laboratory04](src/com/pao/laboratory04/Readme.md) | Map, enum-uri, excepții custom                                   |
 | [laboratory05](src/com/pao/laboratory05/Readme.md) | Records, Comparable aprofundat, Comparator multiplu              |
+| [laboratory06](src/com/pao/laboratory06/Readme.md) | Interfețe și clase — studiu detaliat (Comparable, Comparator, callback, extindere) |
+| [laboratory07](src/com/pao/laboratory07/Readme.md) | Sealed classes și enum-uri — concepte avansate                    |
+
+📁 **[Cerințe proiect individual](src/com/pao/project/README.md)** — Etapa I (24 apr) · Etapa II (5 iun)
 
 Începând cu **laboratory04**, soluțiile se trimit pe GitHub la un fork personal al acestui repo.
-**Data limită:** miercuri, ora 23:59, în fiecare săptămână.
+**Data limită:** vineri, ora 23:59, în fiecare săptămână.
 
 Mai jos găsești:
 
 1. [Cum trimiți soluțiile](#1-cum-trimiți-soluțiile) — fork, configurare remotes, commit săptămânal
 2. [Formularul de înregistrare](#2-completați-url-ul-fork-ului) — link fork personal
 3. [Punctarea laboratoarelor](#3-punctarea-laboratoarelor) — prezență, obligatoriu, bonus
+
+---
+
+### TODO NEW: sectiunea despre testarea automata
+
+You have a jar under src/com/pao/test/utils: [java-diff-utils-4.15.jar](src/com/pao/test/utils/java-diff-utils-4.15.jar)
+Steps to load it:
+
+1. In IntelliJ
+   
+   > Right-click the jar
+   > 
+   > → "Add as Library"
+   > 
+   > → Select your project Module
+   > 
+   > → Ok (button).
+
+2. In VS Code: Update your .classpath or launch config if needed.
+   - Example .classpath entry:
+   ```xml
+   <classpathentry kind="lib" path="src/com/pao/test/utils/java-diff-utils-4.15.jar"/>
+   ```
+    - Example launch config:
+    ```json
+    {
+        "type": "java",
+        "name": "Launch Main",
+        "request": "launch",
+        "mainClass": "com.pao.laboratory04.Main",
+        "classpath": [
+            "src/com/pao/test/utils/java-diff-utils-4.15.jar"
+        ]
+    }
+    ```
+
+
+3. How to run in terminal?
+
+    # Compile:
+    ```
+    javac -cp "lib/java-diff-utils-4.15.jar;src" -d output src/com/pao/laboratory06/exercise1/*.java
+    ```
+
+    # Run:
+    java -cp "lib/java-diff-utils-4.15.jar;src" com.pao.laboratory06.exercise1.Test
+
+    # (On macOS/Linux, replace ';' with ':')
+
+
+### Notă scurtă
+
+- `laboratory06` va acoperi în profunzime interfețele Java și utilizarea lor împreună cu clase (design, best practices, patternuri simple). 
+- `laboratory07` va introduce construcțiile mai noi din limbaj: `sealed` classes și un studiu mai aprofundat al `enum`-urilor.
 
 ---
 
@@ -152,11 +210,11 @@ Trimite link-ul fork-ului pe formularul următor, ca să știm cui oferim puncta
 
 ### Structura notei finale
 
-| Componentă              | Pondere |
-|-------------------------|---------|
-| Proiect individual      | 50%     |
-| Laboratoare (10 din 14) | 25%     |
-| Activitate și prezență  | 25%     |
+| Componentă                                                                     | Pondere |
+|--------------------------------------------------------------------------------|---------|
+| Laboratoare (12 din 14 fara bonus, 10 sau 11 cu bonus)                         | 25%     |
+| Proiect individual (puteti folosi bonusul acumulat la laboratoare, maxim 4.8%) | 25%     |
+| Examen                                                                         | 50%      |
 
 ### Prezență
 
@@ -166,12 +224,60 @@ Trimite link-ul fork-ului pe formularul următor, ca să știm cui oferim puncta
 
 ### Laboratoarele 4–14
 
-Fiecare laborator valorează **2.5%** din nota finală:
+Fiecare laborator valorează **~2.08%** din nota finală (25% ÷ 12 laboratoare):
 
-| Ce rezolvi                       | Punctaj |
-|----------------------------------|---------|
-| Prezență + exerciții obligatorii | 1.5%    |
-| Exercițiul bonus                 | 1.0%    |
+| Ce rezolvi                                  | Punctaj                   |
+|---------------------------------------------|---------------------------|
+| Prezență + exerciții obligatorii (Ex 1+2+3) | ~2.08%                    |
+| Exercițiul bonus (Ex 4)                     | +0.4% → bonus lab+proiect |
+
+**Excepții:** Laboratory 08 (Proiect Partea 1) și Laboratory 13 (Proiect Final) valorează **~2.08%**, fără exercițiu
+bonus — efortul de proiect le înlocuiește.
+
+### Cum obții 25% din laboratoare
+
+Rezolvând **12 laboratoare** (exercițiile obligatorii Ex 1+2+3) obții **25% maxim** — acesta este plafonul:
+
+| Laboratoare rezolvate | Rezultat laborator                                                     |
+|-----------------------|------------------------------------------------------------------------|
+| 12 lab-uri            | 12 × 2.08% = **25%** ✅                                                 |
+| 10 lab-uri            | 10 × 2.08% = **~20.8%** *dar, daca obții 10 bonusuri, rotunjim la 25%* |
+| Minimul = 8 lab-uri   | 8 × 2.08% = **~16.6%**                                                 |
+
+### 🎯 Bonus (până la +4.8%) — adăugat la scorul combinat laborator + proiect
+
+Exercițiul bonus (Ex 4) nu adaugă la nota de laborator (plafonată la 25%), ci se acumulează ca
+**bonus la scorul combinat laboratoare + proiect (max 50%)**, compensând lipsa rotunjirii.
+
+| Exerciții bonus rezolvate | Bonus adăugat la lab+proiect |
+|---------------------------|----------------------------|
+| 1 bonus                   | +0.4%                      |
+| 5 bonusuri                | +2%                        |
+| 12 bonusuri               | +4.8% ✅ (maxim)            |
+
+> **Exemplu:** laboratoare = 25/25, proiect = 21/25 → combinat = 46/50.
+> Ai rezolvat 11 bonusuri (= +4%) → scor final combinat = **50/50** (plafonat la maxim, chiar daca suma este 50.8%).
+
+Bonusurile se adaugă la scorul combinat laboratoare + proiect, **plafonat la 50%**.
+
+> **De ce?** Scorul combinat laboratoare + proiect (50%) nu se rotunjește. Bonusurile compensează
+> fracțiunile pierdute și recompensează efortul suplimentar.
+
+### 🎁 Bonus prezență — la fiecare 5 bonusuri
+
+Fiecare **5 exerciții bonus** rezolvate corect echivalează cu **o prezență extra** la laborator.
+
+Astfel, poți obține maximul de 25% la laboratoare predând soluții la doar **10 laboratoare**
+(în loc de 12), dacă compensezi cu bonusuri:
+
+| Laboratoare predate | Bonusuri rezolvate | Prezențe extra |
+|---------------------|--------------------|----------------|
+| 12                  | 0                  | 0              |
+| 11                  | 5                  | 1              |
+| 10                  | 10                 | 2              |
+
+> **Exemplu:** Predai 10 laboratoare și rezolvi toate cele 10 bonusuri disponibile → +2 prezențe extra
+> → echivalent cu 12 laboratoare → **25% maxim** la laboratoare.
 
 ---
 
@@ -187,14 +293,19 @@ Fiecare laborator valorează **2.5%** din nota finală:
 
 #### Punctajul
 
--> in laboratoarele 4-14 aveti si exercitii bonus, care valoreaza 2.5% din punctajul total al prezentei+activitate.
+-> in laboratoarele 4-14 aveti si exercitii bonus (Ex 4), care adauga pana la **5% bonus la scorul combinat
+laborator+proiect** (0.5% per bonus rezolvat, plafonat la 50%).
+In plus, la fiecare **5 bonusuri** rezolvate primiti o **prezenta extra**, deci puteti preda solutii la 10 laboratoare (
+in loc de 12) si totusi sa obtineti maximul.
 
 Reminder:
-Prezenta + activitate -> 25%, din care 12.5% pentru prezenta, 7.5% daca rezolvati cel putin exercitiile obligatorii, si
-5% daca rezolvati si exercitiile bonus.
-Proiect -> 25%
 
-### Pre-rechizite
+- Laboratoare -> 25%, obtinuti prin rezolvarea a 12 laboratoare (Ex 1+2+3), fiecare valorand ~2.08%.
+- Bonusurile (Ex 4) nu adauga la nota de laborator, ci la scorul combinat lab+proiect (max +5%, plafonat la 50%).
+- La fiecare 5 bonusuri = 1 prezenta extra (deci 10 labs + 10 bonusuri = echivalent 12 labs = 25% max la laborator).
+- Proiect -> 25%.
+
+### Ce unelte să instalezi înainte de pașii de mai jos
 
 - ✅ Cont pe [github.com](https://github.com) (gratuit)
 - ✅ Git instalat — `git --version` în terminal ([descarcă de aici](https://git-scm.com/downloads) dacă nu ai)
