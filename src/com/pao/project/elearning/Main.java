@@ -11,16 +11,21 @@ import com.pao.project.elearning.model.Student;
 import com.pao.project.elearning.service.CourseService;
 import com.pao.project.elearning.service.EnrollmentService;
 import com.pao.project.elearning.service.QuizService;
+import com.pao.project.elearning.service.ReportService;
 import com.pao.project.elearning.service.UserService;
+import com.pao.project.elearning.util.DatabaseConnection;
+import com.pao.project.elearning.util.SchemaInitializer;
 
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        SchemaInitializer.resetSchema();
         UserService userService = UserService.getInstance();
         CourseService courseService = CourseService.getInstance();
         EnrollmentService enrollmentService = EnrollmentService.getInstance();
         QuizService quizService = QuizService.getInstance();
+        ReportService reportService = ReportService.getInstance();
 
         Instructor instructor = new Instructor("I001", "Ana Popescu", "ana.popescu@example.com", "Java");
         Student student1 = new Student("S001", "Ion Ionescu", "ion.ionescu@example.com", "Programare");
@@ -78,5 +83,16 @@ public class Main {
 
         System.out.println("\n=== Studenti in total ===");
         userService.listAllStudents().forEach(System.out::println);
+
+        System.out.println("\n=== Raport JOIN: cursuri si inscrieri ===");
+        reportService.listCoursesWithEnrollmentCount().forEach(System.out::println);
+
+        System.out.println("\n=== Raport JOIN: scoruri, studenti si cursuri ===");
+        reportService.listScoresWithStudentAndCourse().forEach(System.out::println);
+
+        System.out.println("\n=== Raport JOIN: activitate instructori ===");
+        reportService.listInstructorActivity().forEach(System.out::println);
+
+        DatabaseConnection.getInstance().close();
     }
 }

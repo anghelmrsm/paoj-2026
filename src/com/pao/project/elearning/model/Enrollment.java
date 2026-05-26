@@ -9,9 +9,13 @@ public class Enrollment {
     private final LocalDateTime enrolledAt;
 
     public Enrollment(Student student, Course course) {
+        this(student, course, LocalDateTime.now());
+    }
+
+    public Enrollment(Student student, Course course, LocalDateTime enrolledAt) {
         this.student = student;
         this.course = course;
-        this.enrolledAt = LocalDateTime.now();
+        this.enrolledAt = enrolledAt;
     }
 
     public Student getStudent() {

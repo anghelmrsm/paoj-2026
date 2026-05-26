@@ -2,6 +2,7 @@ package com.pao.project.elearning.service;
 
 import com.pao.project.elearning.model.Course;
 import com.pao.project.elearning.model.CourseCode;
+import com.pao.project.elearning.repository.CourseRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +16,7 @@ public class CourseService {
     private static final CourseService INSTANCE = new CourseService();
     private final Map<CourseCode, Course> courses = new HashMap<>();
     private final Map<String, List<Course>> coursesByCategory = new HashMap<>();
+    private final CourseRepository courseRepository = new CourseRepository();
 
     private CourseService() {
     }
@@ -24,29 +26,31 @@ public class CourseService {
     }
 
     public void addCourse(Course course) {
-        courses.putIfAbsent(course.getCode(), course);
-        coursesByCategory.computeIfAbsent(course.getCategory(), key -> new ArrayList<>()).add(course);
+        if (courses.putIfAbsent(course.getCode(), course) == null) {
+            coursesByCategory.computeIfAbsent(course.getCategory(), key -> new ArrayList<>()).add(course);
+            courseRepository.save(course);
+        }
         AuditService.getInstance().logAction("add_course");
     }
 
     public Optional<Course> findCourseByCode(CourseCode code) {
         AuditService.getInstance().logAction("find_course_by_code");
-        return Optional.ofNullable(courses.get(code));
+        return courseRepository.findById(code);
     }
 
     public List<Course> listCourses() {
         AuditService.getInstance().logAction("list_courses");
-        return Collections.unmodifiableList(new ArrayList<>(courses.values()));
+        return Collections.unmodifiableList(courseRepository.findAll());
     }
 
     public List<Course> listCoursesSorted() {
         AuditService.getInstance().logAction("list_courses_sorted");
-        TreeSet<Course> sorted = new TreeSet<>(courses.values());
+        TreeSet<Course> sorted = new TreeSet<>(courseRepository.findAll());
         return Collections.unmodifiableList(new ArrayList<>(sorted));
     }
 
     public List<Course> findCoursesByCategory(String category) {
         AuditService.getInstance().logAction("find_courses_by_category");
-        return Collections.unmodifiableList(coursesByCategory.getOrDefault(category, new ArrayList<>()));
+        return Collections.unmodifiableList(courseRepository.findByCategory(category));
     }
 }

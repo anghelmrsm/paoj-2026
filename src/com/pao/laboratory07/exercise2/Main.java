@@ -46,6 +46,6 @@ public class Main {
             System.out.printf("DISCOUNTED: suma = %.2f lei, numar = %d\n", sumaDiscounted, nrDiscounted);
         if (nrGift > 0)
             System.out.printf("GIFT: suma = 0.00 lei, numar = %d\n", nrGift);
-        System.out.printf("Total platit: %.2f lei\n", sumaStandard + sumaDiscounted);
+        System.out.printf("Total platit: %.2f lei\n\n", sumaStandard + sumaDiscounted);
     }
 }

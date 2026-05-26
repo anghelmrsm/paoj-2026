@@ -4,6 +4,8 @@ import com.pao.project.elearning.exception.QuizNotFoundException;
 import com.pao.project.elearning.model.Quiz;
 import com.pao.project.elearning.model.ScoreRecord;
 import com.pao.project.elearning.model.Student;
+import com.pao.project.elearning.repository.QuizRepository;
+import com.pao.project.elearning.repository.ScoreRecordRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +17,8 @@ public class QuizService {
     private static final QuizService INSTANCE = new QuizService();
     private final Map<String, Quiz> quizzes = new HashMap<>();
     private final List<ScoreRecord> scoreRecords = new ArrayList<>();
+    private final QuizRepository quizRepository = new QuizRepository();
+    private final ScoreRecordRepository scoreRecordRepository = new ScoreRecordRepository();
 
     private QuizService() {
     }
@@ -24,12 +28,14 @@ public class QuizService {
     }
 
     public void addQuiz(Quiz quiz) {
-        quizzes.putIfAbsent(quiz.getId(), quiz);
+        if (quizzes.putIfAbsent(quiz.getId(), quiz) == null) {
+            quizRepository.save(quiz);
+        }
         AuditService.getInstance().logAction("add_quiz");
     }
 
     public Quiz findQuizById(String id) {
-        Quiz quiz = quizzes.get(id);
+        Quiz quiz = quizRepository.findById(id).orElse(null);
         if (quiz == null) {
             throw new QuizNotFoundException("Quiz-ul nu a fost gasit: " + id);
         }
@@ -40,14 +46,14 @@ public class QuizService {
         if (!quizzes.containsKey(quiz.getId())) {
             throw new QuizNotFoundException("Quiz-ul nu a fost gasit: " + quiz.getId());
         }
-        scoreRecords.add(new ScoreRecord(quiz, student, score));
+        ScoreRecord record = new ScoreRecord(quiz, student, score);
+        scoreRecords.add(record);
+        scoreRecordRepository.save(record);
         AuditService.getInstance().logAction("grade_quiz");
     }
 
     public List<ScoreRecord> listScoresForStudent(Student student) {
         AuditService.getInstance().logAction("list_scores_for_student");
-        return scoreRecords.stream()
-                .filter(record -> record.getStudent().equals(student))
-                .collect(Collectors.toList());
+        return scoreRecordRepository.findByStudent(student);
     }
 }
